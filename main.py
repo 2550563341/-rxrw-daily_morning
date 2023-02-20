@@ -25,7 +25,7 @@ def get_weather():
   res = requests.post(url, data)
   resp_id = res.json()
   weather = resp_id["lives"][0]
-  return weather['weather'], math.floor(weather['temperature'])
+  return weather['weather'], weather['temperature']
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
