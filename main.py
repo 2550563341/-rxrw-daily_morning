@@ -19,17 +19,12 @@ template_id = os.environ["TEMPLATE_ID"]
 
 
 def get_weather():
-  url = "https://restapi.amap.com/v3/weather/weatherInfo?city=442000&key=1e1ec6319425c04e027d558b6f934317"
-  res = requests.get(url).json()
-#   weather = res['data']['list'][0]
-  
-  DynamicJsonDocument doc(1024);
-  String resBuff = http.getString();
-  deserializeJson(doc, resBuff);
-  temp = doc["lives"][0]["temperature"].as<String>();//一定要加[0]!!!
-  weather = doc["lives"][0]["weather"].as<String>();
-
-
+  url = "https://restapi.amap.com/v3/weather/weatherInfo"
+  key = '1e1ec6319425c04e027d558b6f934317'
+  data = {'key': key, "city": 442000}
+  res = requests.post(url, data)
+  resp_id = res.json()
+  weather = resp_id["lives"][0]
   return weather['weather'], math.floor(weather['temp'])
 
 def get_count():
