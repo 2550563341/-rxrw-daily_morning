@@ -42,8 +42,9 @@ def get_weather():
     msg1 = "好像下雨了要，记得把雨伞带好哦，别被淋湿了哦"
   else:
     msg1 = "那个有人告诉我今天不下雨，但是怕万一，所以你要看一下外面在看看要不要带雨伞哦"
+  date=datetime.now()
 
-  return weather['weather'], weather['temperature'], msg, msg1
+  return date,weather['weather'], weather['temperature'], msg, msg1
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -68,7 +69,7 @@ def get_random_color():
 client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
-wea, temperature,msg,msg1 = get_weather()
-data = {"weather":{"value":wea, "color":get_random_color()},"temperature":{"value":temperature, "color":get_random_color()},"love_days":{"value":msg, "color":get_random_color()},"birthday_left":{"value":msg1, "color":get_random_color()},"words":{"value":get_words(), "color":get_random_color()}}
+date,wea, temperature,msg,msg1 = get_weather()
+data = {"date":{"value":date,"color":get_random_color()},"weather":{"value":wea, "color":get_random_color()},"temperature":{"value":temperature, "color":get_random_color()},"love_days":{"value":msg, "color":get_random_color()},"birthday_left":{"value":msg1, "color":get_random_color()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id,data)
 print(res)
