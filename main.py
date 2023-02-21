@@ -25,7 +25,23 @@ def get_weather():
   res = requests.post(url, data)
   resp_id = res.json()
   weather = resp_id["lives"][0]
-  return weather['weather'], weather['temperature']
+
+  umbrella = weather["weather"]
+  if umbrella == "晴":
+    msg = "天气好像不错诶，会有小太阳吧，会是暖暖的一天哦"
+  if umbrella == "阴":
+    msg = "太阳去玩躲猫猫了，好像有点冷诶"
+  if umbrella == "多云":
+    msg = "呀，好多云啊，一朵，两朵,三..."
+
+  number = fuzz.ratio("暴风雨", umbrella)
+  if number > 10:
+    msg = "看来今天小太阳下班了啊"
+    msg1 = "好像下雨了要，记得把雨伞带好哦，别被淋湿了哦"
+  else:
+    msg1 = "那个有人告诉我今天不下雨，但是怕万一，所以你要看一下外面在看看要不要带雨伞哦"
+
+  return weather['weather'], weather['temperature'], msg, msg1
 
 def get_count():
   delta = today - datetime.strptime(start_date, "%Y-%m-%d")
@@ -51,6 +67,6 @@ client = WeChatClient(app_id, app_secret)
 
 wm = WeChatMessage(client)
 wea, temperature = get_weather()
-data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":get_count()},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
+data = {"weather":{"value":wea},"temperature":{"value":temperature},"love_days":{"value":msg1},"birthday_left":{"value":get_birthday()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template(user_id, template_id, data)
 print(res)
