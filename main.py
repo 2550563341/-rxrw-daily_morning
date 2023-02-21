@@ -1,5 +1,4 @@
 from datetime import date, datetime
-from fuzzywuzzy import fuzz
 import math
 from wechatpy import WeChatClient
 from wechatpy.client.api import WeChatMessage, WeChatTemplate
@@ -34,9 +33,11 @@ def get_weather():
     msg = "太阳去玩躲猫猫了，好像有点冷诶"
   if umbrella == "多云":
     msg = "呀，好多云啊，一朵，两朵,三..."
-
-  number = fuzz.ratio("暴风雨", umbrella)
-  if number > 10:
+  a = '雨'
+  b = umbrella
+  a_set = set(a)
+  b_set = set(b)
+  if len(a_set & b_set) > 0:
     msg = "看来今天小太阳下班了啊"
     msg1 = "好像下雨了要，记得把雨伞带好哦，别被淋湿了哦"
   else:
