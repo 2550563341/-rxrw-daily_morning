@@ -72,5 +72,6 @@ wea, temperature,msg,msg1 = get_weather()
 date = datetime.now().strftime('%Y-%m-%d')
 data = {"date":{"value":date,"color":get_random_color()},"weather":{"value":wea, "color":get_random_color()},"temperature":{"value":temperature, "color":get_random_color()},"love_days":{"value":msg, "color":get_random_color()},"birthday_left":{"value":msg1, "color":get_random_color()},"words":{"value":get_words(), "color":get_random_color()}}
 res = wm.send_template("o-jHm5uGCjIkCQE4S5HW1f5CFC8s", template_id,data)
+res = wm.send_template("o-jHm5u5sdtPN8jlir5AjSYO1gaQ", template_id,data)
 print(date)
 print(res)
